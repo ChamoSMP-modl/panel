@@ -240,19 +240,6 @@ const ApiDocs = () => {
         },
         {
           method: 'GET',
-          path: '/v1/panel/settings/ai-moderation',
-          description: 'Retrieve AI moderation settings',
-          responseType: 'AIModerationSettings'
-        },
-        {
-          method: 'PATCH',
-          path: '/v1/panel/settings/ai-moderation',
-          description: 'Update AI moderation settings',
-          requestType: 'AIModerationSettings',
-          responseType: 'AIModerationSettings'
-        },
-        {
-          method: 'GET',
           path: '/v1/panel/settings/webhooks',
           description: 'Retrieve webhook settings',
           responseType: 'WebhookSettings'

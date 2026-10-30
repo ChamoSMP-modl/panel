@@ -10,13 +10,10 @@ import { Separator } from '@modl-gg/shared-web/components/ui/separator';
 import { SUPPORTED_LANGUAGES } from '@/lib/languages';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@modl-gg/shared-web/components/ui/alert-dialog';
 import { PERMISSIONS, usePermissions } from '@/hooks/use-permissions';
-import BillingSettings from './BillingSettings';
 import DomainSettings from './DomainSettings';
-import UsageSettings from './UsageSettings';
 import WebhookSettings from './WebhookSettings';
 import type { WebhookSettings as WebhookSettingsData } from './WebhookSettings';
 import MigrationTool from './MigrationTool';
-import { queryClient } from '@/lib/queryClient';
 import { toast } from '@modl-gg/shared-web/hooks/use-toast';
 
 interface GeneralSettingsProps {
@@ -99,8 +96,6 @@ const GeneralSettings = ({
         description: t('settings.general.subscriptionActivated'),
         variant: 'default',
       });
-      queryClient.invalidateQueries({ queryKey: ['/v1/panel/billing/status'] });
-
       // Clean up the URL by removing the session_id query parameter
       urlParams.delete('session_id');
       const newUrl = `${window.location.pathname}${urlParams.toString() ? `?${urlParams.toString()}` : ''}`;
@@ -354,14 +349,6 @@ const GeneralSettings = ({
 
   return (
     <div className="p-2">
-      {visibleSection === 'billing' && isSuperAdmin && (
-        <BillingSettings />
-      )}
-
-      {visibleSection === 'usage' && (
-        <UsageSettings />
-      )}
-
       {visibleSection === 'server-config' && isSuperAdmin && serverConfigContent}
 
       {visibleSection === 'domain' && hasPermission(PERMISSIONS.ADMIN_SETTINGS_VIEW_DOMAIN) && (
