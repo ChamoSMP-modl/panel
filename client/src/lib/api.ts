@@ -1,17 +1,6 @@
 import { ApiHttpError } from './http-error';
-
-function normalizeBaseUrl(baseUrl: string): string {
-  return baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-}
-
 function resolveApiBaseUrl(): string {
-  const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
-  if (configuredBaseUrl && configuredBaseUrl.startsWith('/')) {
-    return normalizeBaseUrl(configuredBaseUrl);
-  }
-
-  // Default to same-origin API routing: https://<panel-domain>/api/v1/...
-  return '/api';
+  return "https://modl.backend.chamosmp.net"
 }
 
 const API_BASE_URL = resolveApiBaseUrl();
@@ -27,11 +16,6 @@ const CURRENT_DOMAIN: string =
 export function getCurrentDomain(): string {
   return CURRENT_DOMAIN;
 }
-
-export function getApiBaseUrl(): string {
-  return API_BASE_URL;
-}
-
 export function getAvatarUrl(uuid: string, size: number = 32, _overlay: boolean = true): string {
   return `https://mc-heads.net/avatar/${uuid}/${size}`;
 }
