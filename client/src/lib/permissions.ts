@@ -50,4 +50,4 @@ export const PERMISSIONS = {
   TICKET_DELETE_ALL: 'ticket.delete.all',
 } as const;
 
-export const SUPER_ADMIN_EXCLUSIVE_PERMISSION: string = PERMISSIONS.ADMIN_SETTINGS_VIEW_BILLING;
+export const SUPER_ADMIN_EXCLUSIVE_PERMISSION: string = "admin.audit.rollback";
