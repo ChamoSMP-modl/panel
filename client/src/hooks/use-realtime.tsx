@@ -107,7 +107,7 @@ export function isPanelRealtimeEnabled(): boolean {
   return import.meta.env.VITE_REALTIME_ENABLED !== 'false';
 }
 
-export function createRealtimeWebSocketUrl(location: Location): string {
+export function createRealtimeWebSocketUrl(/*location: Location*/): string {
   //const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
   //return `${protocol}//${location.host}${REALTIME_PATH}`;
   return `wss://modl.backend.chamosmp.net${REALTIME_PATH}`;
@@ -503,7 +503,7 @@ export function useRealtimeInvalidation(): void {
 
     const connect = () => {
       if (!active) return;
-      const nextSocket = new WebSocket(createRealtimeWebSocketUrl(window.location));
+      const nextSocket = new WebSocket(createRealtimeWebSocketUrl(/*window.location*/));
       socket = nextSocket;
       nextSocket.binaryType = 'arraybuffer';
 
