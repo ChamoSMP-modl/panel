@@ -2605,8 +2605,7 @@ const Settings = () => {
                                                     return (
                                                         <div
                                                             key={sub.id}
-                                                            className={`flex items-center gap-2 p-2 rounded-md text-xs transition-colors ${
-                                                                'opacity-50 cursor-not-allowed'
+                                                            className={`flex items-center gap-2 p-2 rounded-md text-xs transition-colors hover:bg-muted text-muted-foreground cursor-pointer'
                                                             }`}
                                                             onClick={(e) => {
                                                                 e.stopPropagation();

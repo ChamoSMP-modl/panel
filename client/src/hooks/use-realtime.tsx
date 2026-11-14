@@ -24,7 +24,7 @@ const INITIAL_RECONNECT_DELAY_MS = 1_000;
 const MAX_RECONNECT_DELAY_MS = 30_000;
 const MAX_ADVISED_RECONNECT_DELAY_MS = 60_000;
 const RECENT_EVENT_ID_LIMIT = 256;
-const REALTIME_PATH = '/api/v1/realtime/ws';
+const REALTIME_PATH = '/v1/realtime/ws';
 const POLICY_VIOLATION_CLOSE_CODE = 1008;
 
 const PANEL_TOPICS = [
@@ -108,8 +108,9 @@ export function isPanelRealtimeEnabled(): boolean {
 }
 
 export function createRealtimeWebSocketUrl(location: Location): string {
-  const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-  return `${protocol}//${location.host}${REALTIME_PATH}`;
+  //const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  //return `${protocol}//${location.host}${REALTIME_PATH}`;
+  return `wss://modl.backend.chamosmp.net${REALTIME_PATH}`;
 }
 
 export function getReconnectDelayMs(attempt: number, random: () => number = Math.random): number {

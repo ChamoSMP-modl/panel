@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "check": "tsc --noEmit && eslint . && npm run test",
     "test": "node --experimental-strip-types --test 'client/src/**/*.test.ts'",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "deploy": "npm run build && wrangler pages deploy ./dist"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
