@@ -30,8 +30,12 @@ import { useRoles } from '@/hooks/use-data';
 import { apiFetch } from '@/lib/api';
 
 const inviteSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address.' }),
-  role: z.string().min(1, { message: 'Please select a role.' }),
+  email: z.email({
+          error: 'Invalid email address.'
+    }),
+  role: z.string().min(1, {
+      error: 'Please select a role.'
+}),
 });
 
 interface StaffRole {

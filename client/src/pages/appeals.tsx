@@ -36,7 +36,7 @@ import { StatusBanner } from "@modl-gg/shared-web/components/ui/status-banner";
 import { useToast } from '@modl-gg/shared-web/hooks/use-toast';
 import { Separator } from '@modl-gg/shared-web/components/ui/separator';
 import { Badge } from '@modl-gg/shared-web/components/ui/badge';
-import { appealAuthTokenKey, setCookie, useCreateAppeal, useRequestAppealVerification, useVerifyAppealCode, withAppealAuthToken } from '@/hooks/use-data';
+import { appealAuthTokenKey, setCookie, useCreateAppeal, useRequestAppealVerification, useVerifyAppealCode, withAppealAuthToken, type CreateAppealInput } from '@/hooks/use-data';
 import { deriveAppealStatus, formatAppealStatusLabel, isTerminalAppealStatus, normalizeAppealStatus } from '@/lib/ticket-enums';
 import type { AppealFormField, AppealFormSettings } from '@/types/forms';
 
@@ -72,7 +72,9 @@ const epochMillisToISO = (value: string | number | undefined | null): string | u
 
 // Define the search form schema
 const searchSchema = z.object({
-  banId: z.string().min(6, { message: "Ban ID must be at least 6 characters" }),
+  banId: z.string().min(6, {
+      error: "Ban ID must be at least 6 characters"
+}),
 });
 
 type SearchFormValues = z.infer<typeof searchSchema>;
@@ -231,15 +233,25 @@ const AppealsPage = () => {
     if (!appealFormSettings?.fields) {
       // Fallback to basic schema if no settings
       return z.object({
-        banId: z.string().min(6, { message: "Ban ID must be at least 6 characters" }),
-        email: z.string().email({ message: "Please enter a valid email address" }),
-        reason: z.string().min(20, { message: "Please provide a detailed explanation (min 20 characters)" }),
+        banId: z.string().min(6, {
+            error: "Ban ID must be at least 6 characters"
+        }),
+        email: z.email({
+                    error: "Please enter a valid email address"
+                }),
+        reason: z.string().min(20, {
+            error: "Please provide a detailed explanation (min 20 characters)"
+        }),
       });
     }
 
-    const schemaFields: Record<string, z.ZodTypeAny> = {
-      banId: z.string().min(6, { message: "Ban ID must be at least 6 characters" }),
-      email: z.string().email({ message: "Please enter a valid email address" }),
+    const schemaFields: Record<string, z.ZodType> = {
+      banId: z.string().min(6, {
+          error: "Ban ID must be at least 6 characters"
+    }),
+      email: z.email({
+                error: "Please enter a valid email address"
+          }),
     };
 
     if (Array.isArray(appealFormSettings.fields)) {
@@ -287,7 +299,7 @@ const AppealsPage = () => {
   };
 
   const dynamicSchema = createDynamicSchema();
-  type DynamicFormValues = z.infer<typeof dynamicSchema>;
+  type DynamicFormValues = Record<string, unknown>;
 
   // Dynamic form
   const appealForm = useForm<DynamicFormValues>({
@@ -558,7 +570,7 @@ const AppealsPage = () => {
         }
       });
 
-      const fieldValues: Record<string, JsonValue> = values;
+      const fieldValues: Record<string, JsonValue> = values as Record<string, unknown> as Record<string, JsonValue>;
 
       // Extract main reason field (look for common reason field names)
       const reasonFieldNames = ['reason', 'appeal_reason', 'why_appeal', 'explanation'];
@@ -596,14 +608,14 @@ const AppealsPage = () => {
       }
 
       // Create appeal data matching server expectations
-      const appealData = {
-        punishmentId: values.banId,
-        playerUuid: banInfo.playerUuid ?? '',
-        email: values.email,
-        reason: mainReason,
-        evidence: evidence,
-        additionalData: additionalData,
-        attachments: allAttachments,
+      const appealData: CreateAppealInput = {
+        punishmentId: values.banId as string,
+        playerUuid: (banInfo.playerUuid ?? '') as string,
+        email: values.email as string,
+        reason: (mainReason ?? '') as string,
+        evidence: (evidence ?? '') as string,
+        additionalData: additionalData as Record<string, JsonValue>,
+        attachments: allAttachments as JsonValue[],
         fieldLabels: fieldLabelsMapping  // Send field labels to server
       };
 
@@ -617,7 +629,7 @@ const AppealsPage = () => {
       // Refresh the page data
       setShowAppealForm(false);
       setAttachments([]);
-      onSearchSubmit({ banId: values.banId });
+      onSearchSubmit({ banId: values.banId as string });
 
     } catch (error) {
       console.error('Error submitting appeal:', error);
@@ -788,7 +800,11 @@ const AppealsPage = () => {
               <FormItem>
                 <FormLabel>{field.label}</FormLabel>
                 <FormControl>
-                  <Input {...formField} placeholder={field.description} />
+                  <Input 
+                    {...formField} 
+                    value={(formField.value as string | number | readonly string[] | undefined) ?? ''} 
+                    placeholder={field.description} 
+                  />
                 </FormControl>
                 {field.description && (
                   <FormDescription>{field.description}</FormDescription>
@@ -811,6 +827,7 @@ const AppealsPage = () => {
                 <FormControl>
                   <Textarea 
                     {...formField} 
+                    value={(formField.value as string | number | readonly string[] | undefined) ?? ''}
                     placeholder={field.description}
                     className="min-h-[100px]"
                   />
@@ -834,7 +851,7 @@ const AppealsPage = () => {
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <FormControl>
                   <Checkbox
-                    checked={formField.value}
+                    checked={formField.value as boolean}
                     onCheckedChange={formField.onChange}
                   />
                 </FormControl>
@@ -872,7 +889,7 @@ const AppealsPage = () => {
                       setForceRerender(prev => prev + 1);
                     }
                   }} 
-                  defaultValue={formField.value}
+                  defaultValue={formField.value as string}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -919,7 +936,7 @@ const AppealsPage = () => {
                         setForceRerender(prev => prev + 1);
                       }
                     }}
-                    defaultValue={formField.value}
+                    defaultValue={formField.value as string}
                     className="flex flex-col space-y-1"
                   >
                     {field.options?.map((option) => (
@@ -1556,7 +1573,12 @@ const AppealsPage = () => {
                           <FormItem>
                             <FormLabel>{t('appeals.punishmentId')}</FormLabel>
                             <FormControl>
-                              <Input {...field} readOnly disabled />
+                              <Input 
+                                {...field} 
+                                value={(field.value as string | number | readonly string[] | undefined) ?? ''} 
+                                readOnly 
+                                disabled 
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -1571,7 +1593,12 @@ const AppealsPage = () => {
                           <FormItem>
                             <FormLabel>{t('submitTicket.emailAddress')}</FormLabel>
                             <FormControl>
-                              <Input {...field} type="email" placeholder={t('appeals.emailPlaceholder')} />
+                              <Input 
+                                {...field} 
+                                value={(field.value as string | number | readonly string[] | undefined) ?? ''} 
+                                type="email" 
+                                placeholder={t('appeals.emailPlaceholder')} 
+                              />
                             </FormControl>
                             <FormDescription>
                               {t('appeals.emailDesc')}
@@ -1595,7 +1622,7 @@ const AppealsPage = () => {
                               isVisible = fieldValue === section.showIfValue;
                             } else if (section.showIfFieldId && section.showIfValues) {
                               const fieldValue = appealForm.watch(section.showIfFieldId);
-                              isVisible = section.showIfValues.includes(fieldValue);
+                              isVisible = (section.showIfValues as string[]).includes(fieldValue as string);
                             }
                             
                             // Check if any field in this section has optionSectionMapping that targets this section
@@ -1603,7 +1630,7 @@ const AppealsPage = () => {
                               appealFormSettings.fields.forEach(field => {
                                 if (field.optionSectionMapping) {
                                   const fieldValue = appealForm.watch(field.id);
-                                  if (field.optionSectionMapping[fieldValue] === section.id) {
+                                  if (field.optionSectionMapping[fieldValue as string] === section.id) {
                                     isVisible = true;
                                   }
                                 }
@@ -1648,6 +1675,7 @@ const AppealsPage = () => {
                               <FormControl>
                                 <Textarea
                                   {...field}
+                                  value={(field.value as string | number | readonly string[] | undefined) ?? ''}
                                   placeholder={t('appeals.appealReasonPlaceholder')}
                                   className="min-h-[120px]"
                                 />

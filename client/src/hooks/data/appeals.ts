@@ -55,7 +55,7 @@ export function useAppealsByPunishment(punishmentId: string) {
   });
 }
 
-interface CreateAppealInput {
+export interface CreateAppealInput {
   punishmentId: JsonValue;
   playerUuid: JsonValue;
   email: JsonValue;

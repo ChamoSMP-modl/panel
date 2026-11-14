@@ -29,7 +29,9 @@ import { useToast } from "@modl-gg/shared-web/hooks/use-toast";
 import { Badge } from '@modl-gg/shared-web/components/ui/badge';
 
 const loginSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
+  email: z.email({
+          error: "Please enter a valid email address"
+    }),
   code: z.string().optional(),
 });
 
