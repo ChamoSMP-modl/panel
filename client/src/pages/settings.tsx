@@ -555,7 +555,6 @@ const Settings = () => {
             // Map legacy tab names to new category names
             const categoryMap: Record<string, string> = {
                 'tags': 'tickets',
-                'homepage': 'knowledgebase',
             };
             const mappedCategory = categoryMap[urlCategory] || urlCategory;
             const categoryPermissionKey: Record<string, string> = {tickets: 'tags'};
@@ -2628,7 +2627,7 @@ const Settings = () => {
 
                 {/* Expanded Content Section - Below all cards */}
                 {/* Only show Card wrapper for sections that don't have their own Card */}
-                {expandedCategory !== 'staff' && expandedCategory !== 'knowledgebase' && (
+                {expandedCategory !== 'staff' && (
                     <Card className="rounded-card shadow-card">
                         <CardContent className="p-8">
                             {/* Account Settings - Show by default when no sub-category is expanded */}
@@ -2647,7 +2646,7 @@ const Settings = () => {
                                 />
                             )}
 
-                            {/* Server & Billing Settings */}
+                            {/* Server Settings */}
                             {expandedCategory === 'general' && expandedSubCategory && (
                                 <div className="space-y-4">
                                     <h3 className="text-lg font-medium flex items-center gap-2">

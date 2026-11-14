@@ -1,8 +1,6 @@
 import {
-    BookOpen,
     Database,
     Globe,
-    Home,
     Layers,
     MessageCircle,
     Scale,
@@ -60,10 +58,6 @@ export const SETTINGS_SUB_CATEGORIES: Record<string, SettingsSubCategoryDefiniti
     staff: [
         {id: 'staff-management', titleKey: 'settings.page.staffManagement', icon: UserIcon},
         {id: 'roles-permissions', titleKey: 'settings.page.rolesPermissions', icon: Shield},
-    ],
-    knowledgebase: [
-        {id: 'knowledgebase-articles', titleKey: 'settings.page.knowledgebase', icon: BookOpen},
-        {id: 'homepage-cards', titleKey: 'settings.page.homepageCards', icon: Home},
     ],
 };
 

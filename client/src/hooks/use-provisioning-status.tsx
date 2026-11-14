@@ -29,7 +29,6 @@ export function useProvisioningStatusCheck() {
       '/ticket',
       '/tickets',
       '/appeal',
-      '/knowledgebase',
     ];
 
     if (exemptPaths.some(path => location.startsWith(path)) || location === '/') {

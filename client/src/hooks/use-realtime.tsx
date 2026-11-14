@@ -37,7 +37,6 @@ const PANEL_TOPICS = [
   Topic.PANEL_ROLES,
   Topic.PANEL_SETTINGS,
   Topic.PANEL_PUNISHMENT_TYPES,
-  Topic.PANEL_KNOWLEDGEBASE,
   Topic.PANEL_AUDIT,
   Topic.PANEL_HOMEPAGE,
   Topic.PANEL_APPEALS,
@@ -138,8 +137,6 @@ function getTopicForPanelResource(resource: PanelResource): Topic | null {
       return Topic.PANEL_SETTINGS;
     case PanelResource.PUNISHMENT_TYPES:
       return Topic.PANEL_PUNISHMENT_TYPES;
-    case PanelResource.KNOWLEDGEBASE:
-      return Topic.PANEL_KNOWLEDGEBASE;
     case PanelResource.AUDIT:
       return Topic.PANEL_AUDIT;
     case PanelResource.HOMEPAGE:
@@ -205,8 +202,6 @@ function getPanelResourceInvalidationTargets(resource: PanelResource, resourceId
     case PanelResource.SETTINGS:
     case PanelResource.PUNISHMENT_TYPES:
       return ALL_SETTINGS_TARGETS;
-    case PanelResource.KNOWLEDGEBASE:
-      return [['knowledgebaseCategories'], ['homepageCards']];
     case PanelResource.HOMEPAGE:
       return [['homepageCards']];
     case PanelResource.AUDIT:
@@ -269,8 +264,6 @@ function getTopicInvalidationTargets(topic: Topic): InvalidationTarget[] {
     case Topic.PANEL_SETTINGS:
     case Topic.PANEL_PUNISHMENT_TYPES:
       return ALL_SETTINGS_TARGETS;
-    case Topic.PANEL_KNOWLEDGEBASE:
-      return [['knowledgebaseCategories'], ['homepageCards']];
     case Topic.PANEL_HOMEPAGE:
       return [['homepageCards']];
     case Topic.PANEL_AUDIT:
