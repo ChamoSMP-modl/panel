@@ -56,8 +56,6 @@ import {resolveLanguage} from '@/hooks/use-language-preference';
 import {usePermissions, type SettingsTab} from '@/hooks/use-permissions';
 import StaffManagementPanel from '@/components/settings/StaffManagementPanel';
 import StaffRolesCard from '@/components/settings/StaffRolesCard';
-import KnowledgebaseSettings from '@/components/settings/KnowledgebaseSettings';
-import HomepageCardSettings from '@/components/settings/HomepageCardSettings';
 import AccountSettings from '@/components/settings/AccountSettings';
 import GeneralSettings from '@/components/settings/GeneralSettings';
 import PunishmentSettings from '@/components/settings/PunishmentSettings';
@@ -2763,14 +2761,6 @@ const Settings = () => {
                     <>
                         {expandedSubCategory === 'staff-management' && <StaffManagementPanel/>}
                         {expandedSubCategory === 'roles-permissions' && <StaffRolesCard/>}
-                    </>
-                )}
-
-                {/* Knowledgebase & Homepage Settings - These have their own Card wrappers */}
-                {expandedCategory === 'knowledgebase' && expandedSubCategory && (
-                    <>
-                        {expandedSubCategory === 'knowledgebase-articles' && <KnowledgebaseSettings/>}
-                        {expandedSubCategory === 'homepage-cards' && <HomepageCardSettings/>}
                     </>
                 )}
 
