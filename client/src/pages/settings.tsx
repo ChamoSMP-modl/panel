@@ -8,7 +8,6 @@ import {
     MessageCircle,
     Save,
     CheckCircle,
-    BookOpen,
     Settings as SettingsIcon,
     ChevronDown,
     ChevronRight,
@@ -195,6 +194,7 @@ interface StatusThresholds {
         pointExpiryMonths: number; // Months after punishment expiry that points still count
     };
 }
+
 type GeneralSettingsData = {
     serverDisplayName?: string;
     discordWebhookUrl?: string;
@@ -2539,14 +2539,6 @@ const Settings = () => {
             icon: Users,
             permission: 'staff',
             subCategories: toSubCategories('staff'),
-        },
-        {
-            id: 'knowledgebase',
-            title: t('settings.page.knowledgebaseHomepage'),
-            description: t('settings.page.knowledgebaseHomepageDesc'),
-            icon: BookOpen,
-            permission: 'knowledgebase',
-            subCategories: toSubCategories('knowledgebase'),
         },
     ];
 

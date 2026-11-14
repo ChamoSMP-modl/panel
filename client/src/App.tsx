@@ -42,11 +42,6 @@ const UploadEvidencePage = lazy(() => import("@/pages/upload-evidence-page"));
 const VerifyPage = lazy(() => import("@/pages/VerifyPage"));
 const ReplayPage = lazy(() => import("@/pages/replay-page"));
 
-// Knowledgebase Pages
-const KnowledgebasePage = lazy(() => import("@/pages/KnowledgebasePage"));
-const ArticleDetailPage = lazy(() => import("@/pages/ArticleDetailPage"));
-const HomePage = lazy(() => import("@/pages/HomePage"));
-
 const PageLoader = () => (
     <div className="flex items-center justify-center min-h-[200px]">
         <Loader2 className="h-6 w-6 animate-spin text-primary"/>
@@ -56,8 +51,7 @@ const PageLoader = () => (
 function Router() {
     const [location] = useLocation();
     const isMobile = useIsMobile();
-
-    const isAdminPanelRoute = location.startsWith("/panel");
+    location.startsWith("/panel");
     const isAuthPage = location === '/auth' || location === '/panel/auth';
     const isAppealsPage = location === '/appeal';
     const isPlayerTicketPage = location.startsWith('/ticket/');
@@ -69,21 +63,6 @@ function Router() {
     const isVerifyPage = location.startsWith('/verify/');
     const isReplayPage = location.startsWith('/replay');
     const isRateLimitPage = location.startsWith('/rate-limit');
-
-    if (!isAdminPanelRoute && !isAuthPage && !isAppealsPage && !isPlayerTicketPage && !isSubmitTicketPage && !isProvisioningPage && !isAcceptInvitationPage && !isVerifyEmailPage && !isUploadEvidencePage && !isVerifyPage && !isReplayPage && !isRateLimitPage) {
-        return (
-            <main className="h-full bg-background">
-                <Suspense fallback={<PageLoader/>}>
-                    <Switch>
-                        <Route path="/" component={HomePage}/>
-                        <Route path="/knowledgebase" component={KnowledgebasePage}/>
-                        <Route path="/article/:articleSlug" component={ArticleDetailPage}/>
-                        <Route component={NotFound}/>
-                    </Switch>
-                </Suspense>
-            </main>
-        );
-    }
 
     if (isAuthPage || isAppealsPage || isPlayerTicketPage || isSubmitTicketPage || isProvisioningPage || isAcceptInvitationPage || isVerifyEmailPage || isUploadEvidencePage || isVerifyPage || isReplayPage || isRateLimitPage) {
         return (
@@ -108,7 +87,7 @@ function Router() {
             </main>
         );
     }
-
+    
     // Mobile version
     if (isMobile) {
         return (
@@ -138,10 +117,6 @@ function Router() {
                             <Route path="/verify/:token" component={VerifyPage}/>
                             <Route path="/rate-limit" component={RateLimitPage}/>
                             <Route path="/replay" component={ReplayPage}/>
-                            {/* Public KB routes for mobile, if accessed directly and not caught by earlier block */}
-                            <Route path="/knowledgebase" component={KnowledgebasePage}/>
-                            <Route path="/article/:articleSlug" component={ArticleDetailPage}/>
-                            <Route path="/" component={HomePage}/>
                             <Route component={NotFound}/>
                         </Switch>
                     </Suspense>
@@ -180,10 +155,6 @@ function Router() {
                         <Route path="/verify/:token" component={VerifyPage}/>
                         <Route path="/rate-limit" component={RateLimitPage}/>
                         <Route path="/replay" component={ReplayPage}/>
-                        {/* Public KB routes for desktop, if accessed directly and not caught by earlier block */}
-                        <Route path="/knowledgebase" component={KnowledgebasePage}/>
-                        <Route path="/article/:articleSlug" component={ArticleDetailPage}/>
-                        <Route path="/" component={HomePage}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </Suspense>
