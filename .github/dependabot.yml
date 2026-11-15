@@ -3,7 +3,7 @@ version: 2
 registries:
   modl-nexus:
     type: npm-registry
-    url: https://nexus.modl.gg/repository/npm-releases/
+    url: https://nexus.modl.gg/repository/npm-releases
 
 updates:
   - package-ecosystem: "npm"
