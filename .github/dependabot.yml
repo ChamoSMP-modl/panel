@@ -3,6 +3,7 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    registries: "*"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "@modl-gg/*"
