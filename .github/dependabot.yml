@@ -5,7 +5,6 @@ registries:
     type: npm-registry
     url: https://nexus.modl.gg/repository/npm-releases
     scope: "@modl-gg"
-    token: ""
 
 updates:
   - package-ecosystem: "npm"
