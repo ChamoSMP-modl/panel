@@ -61,7 +61,7 @@ export default defineConfig(({ mode }) => {
                 id.includes('node_modules/react-smooth') ||
                 id.includes('node_modules/fast-equals')
               ) return 'charts-vendor';
-              if (id.includes('node_modules/@modl-gg/replay-viewer') || id.includes('node_modules/three')) return 'replay-viewer-vendor';
+              if (id.includes('node_modules/@chamosmp-net/replay-viewer') || id.includes('node_modules/three')) return 'replay-viewer-vendor';
               // Group radix with its required helpers so radix-vendor never has
               // to pull bindings back from vendor (the helpers are peer-deps of
               // the @radix-ui/react-* primitives).

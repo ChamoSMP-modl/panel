@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ReplayViewer } from '@modl-gg/replay-viewer';
+import { ReplayViewer } from '@chamosmp-net/replay-viewer';
 import { fetchReplayMetadata, submitReplayLabels, type ReplayMetadata } from '@/lib/replay-api';
 import { Loader2 } from 'lucide-react';
 
