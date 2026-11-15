@@ -8,5 +8,7 @@ registries:
 updates:
   - package-ecosystem: "npm"
     directory: "/"
+    registries:
+      - modl-nexus
     schedule:
       interval: "daily"
